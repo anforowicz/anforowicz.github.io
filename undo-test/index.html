@@ -2,11 +2,21 @@
   <head>
     <title>Undo stack testing</title>
   </head>
-  <body background="yellow">
+  <body style="background-color:bisque">
     Main frame.<br/>
     Input1: <input type="text" /> <br/>
     Input2: <input type="text" /> <br/>
     <button onclick="document.execCommand('undo')">Undo</button>
     <button onclick="document.execCommand('redo')">Redo</button>
+    <br/>
+
+    Subframe1 (http origin):
+    <iframe src="http://anforowicz.github.io/undo-test/index.html"></iframe>
+    <br/>
+
+    Subframe2 (https origin):
+    <iframe src="https://anforowicz.github.io/undo-test/index.html"></iframe>
+    <br/>
+
   </body>
 </html>
