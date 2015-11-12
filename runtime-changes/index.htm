@@ -4,7 +4,7 @@
     <script type="text/javascript">
 function addNewMarker(elementId, marker) {
   f = document.getElementById(elementId)
-  f.contentWindow.body.innerHTML = elementId + ": " + marker
+  f.contentDocument.body.innerHTML = elementId + ": " + marker
 }
 
 function onLoad() {
