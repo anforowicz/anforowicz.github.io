@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="text/javascript">
+function addNewMarker(elementId, marker) {
+  f = document.getElementById(elementId)
+  f.contentWindow.body.innerHTML = elementId + ": " + marker
+}
+
+function onLoad() {
+  addNewMarker("subframe1", "21595339-61fc-4854-b6df-0668328ea263")
+  addNewMarker("subframe2", "adf55719-15e7-45be-9eda-d12fe782a1bd")
+}
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <h1>Test page features</h1>
+
+    IFrames below have the same URI, but JavaScript will change their
+    contents - the saved page should preserve this difference in
+    contents of the IFrames.
+
+    <h1>Test content</h1>
+
+    Content verification marker:
+    main frame: 396f17f2-2c48-4793-a570-bc856e66e75d
+    <br>
+    <br>
+
+    <iframe id="subframe1" src="subframe.htm"></iframe>
+    <br>
+    <br>
+    <iframe id="subframe2" src="subframe.htm"></iframe>
+    <br>
+    <br>
+
+  </body>
+</html>
