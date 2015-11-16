@@ -8,8 +8,7 @@ function addNewMarker(elementId, marker) {
 }
 
 function onLoad() {
-  alert("search value: " + window.location.search)
-  if (window.location.search.lastIndexOf("do_runtime_changes") != 0)
+  if (location.href.indexOf("do_runtime_changes") == (-1))
     return
 
   addNewMarker("subframe1", "21595339-61fc-4854-b6df-0668328ea263")
@@ -51,6 +50,8 @@ function onLoad() {
         &lt;/head&gt;
         &lt;body&gt;
           srcdoc3: bd191e37-1797-41a4-9e25-a732d988b255
+          &lt;br&gt;
+          &lt;br&gt;
         &lt;/body&gt;
       &lt;/html&gt;"></iframe>
     <br>
@@ -62,6 +63,8 @@ function onLoad() {
         &lt;/head&gt;
         &lt;body&gt;
           srcdoc4: c60fa69e-20a8-4cb0-ad9d-122355fe2522
+          &lt;br&gt;
+          &lt;br&gt;
         &lt;/body&gt;
       &lt;/html&gt;"></iframe>
     <br>
