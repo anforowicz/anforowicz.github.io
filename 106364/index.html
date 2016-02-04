@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<script>
+  function populateFrame(id, content) {
+    var iframe = document.getElementById(id);
+    var body = '<html><head></head><body>' + content + '</body></html>';
+    var doc = iframe.contentWindow || iframe.contentDocument;
+    if (doc && doc.document) {
+      doc = doc.document;
+      doc.open();
+      doc.write(body);
+      doc.close();
+    }
+  }
+
+  function populate() {
+    populateFrame('iframe1', 'Bor');
+    populateFrame('iframe2', 'ken');
+  }
+</script>
+</head>
+<body onload="populate();">
+  Test page.
+  <iframe id='iframe1'></iframe>
+  <iframe id='iframe2'></iframe>
+</body>
+</html>
