@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <style>
+      iframe {
+        border-style: solid;
+        border-width: 5px;
+        width: 10em;
+        height: 10em;
+        position: absolute;
+      }
+
+      .left {
+        border-color: red;
+        left: 3em;
+      }
+      .right {
+        border-color: green;
+        right: 3em;
+      }
+    </style>
+    <script>
+      function addFrame(src, className) {
+        var iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.className = className;
+
+        var framesDiv = document.getElementById("dynamically-created-frames");
+        framesDiv.appendChild(iframe);
+      }
+
+      function addLeftFrame() { addFrame('red.htm', 'left'); }
+      function addRightFrame() { addFrame('green.htm', 'right'); }
+
+      function onLoad() {
+        var orderDescriptionSpan = document.getElementById("order-description");
+
+        if (!localStorage.pageLoadCount)
+          localStorage.pageLoadCount = 0;
+        localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
+
+        if ((localStorage.pageLoadCount % 2) == 0) {
+          orderDescriptionSpan.innerText = "First left/red.htm, then right/green.htm frame.";
+          addLeftFrame();
+          addRightFrame();
+        } else {
+          orderDescriptionSpan.innerText = "First right/green.htm, then left/red.htm frame.";
+          addRightFrame();
+          addLeftFrame();
+        }
+      }
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <div>
+      Frame creation order during this page load:
+      <span id="order-description">???</span>
+    </div>
+    <div id="dynamically-created-frames">
+    </div>
+  </body>
+</html>
