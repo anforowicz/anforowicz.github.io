@@ -26,24 +26,26 @@
 
         var framesDiv = document.getElementById("dynamically-created-frames");
         framesDiv.appendChild(iframe);
+
+        var orderDescriptionList = document.getElementById("order-description");
+        var listItem = document.createElement('li');
+        listItem.innerText = 'Created <iframe class="' + className +
+          '" src="' + src + '"></iframe>';
+        orderDescriptionList.appendChild(listItem);
       }
 
       function addLeftFrame() { addFrame('red.htm', 'left'); }
       function addRightFrame() { addFrame('green.htm', 'right'); }
 
       function onLoad() {
-        var orderDescriptionSpan = document.getElementById("order-description");
-
         if (!localStorage.pageLoadCount)
           localStorage.pageLoadCount = 0;
         localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
 
         if ((localStorage.pageLoadCount % 2) == 0) {
-          orderDescriptionSpan.innerText = "First left/red.htm, then right/green.htm frame.";
           addLeftFrame();
           addRightFrame();
         } else {
-          orderDescriptionSpan.innerText = "First right/green.htm, then left/red.htm frame.";
           addRightFrame();
           addLeftFrame();
         }
@@ -53,8 +55,10 @@
   <body onload="onLoad()">
     <div>
       Frame creation order during this page load:
-      <span id="order-description">???</span>
+      <ul id="order-description"></ul>
     </div>
+    <hr>
+    Dynamically created frames:
     <div id="dynamically-created-frames">
     </div>
   </body>
