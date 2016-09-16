@@ -24,18 +24,20 @@
         iframe.src = src;
         iframe.className = className;
 
+        // The next line helps Chromium identify the frames, although it is
+        // not strictly needed, because frame creation order is always:
+        // first "left", then "right".
+        iframe.name = className;
+
         var framesDiv = document.getElementById("dynamically-created-frames");
         framesDiv.appendChild(iframe);
 
         var orderDescriptionList = document.getElementById("order-description");
         var listItem = document.createElement('li');
         listItem.innerText = 'Created <iframe class="' + className +
-          '" src="' + src + '"></iframe>';
+          '" name="' + className + '" src="' + src + '"></iframe>';
         orderDescriptionList.appendChild(listItem);
       }
-
-      function addLeftFrame() { addFrame('red.htm', 'left'); }
-      function addRightFrame() { addFrame('green.htm', 'right'); }
 
       function onLoad() {
         if (!localStorage.pageLoadCount)
@@ -43,11 +45,11 @@
         localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
 
         if ((localStorage.pageLoadCount % 2) == 0) {
-          addLeftFrame();
-          addRightFrame();
+          addFrame('blue-toc.htm', 'left');
+          addFrame('gray-toc.htm', 'right');
         } else {
-          addRightFrame();
-          addLeftFrame();
+          addFrame('gray-toc.htm', 'left');
+          addFrame('blue-toc.htm', 'right');
         }
       }
     </script>
@@ -61,7 +63,9 @@
           <li>Open a new tab (so that closing a tab in one of next steps
             won't quit the whole browser).</li>
           <li>Navigate to this page using the address bar / omnibox / etc.</li>
-          <li>Observe that on a fresh load, the left frame always contains
+          <li>Click on a link to navigate the left frame to red.htm</li>
+          <li>Click on a link to navigate the right frame to green.htm</li>
+          <li>Observe that the left frame contains
             red.htm, and the right frame always contains green.htm
             (i.e. the color of frame contents and frame borders matches)</li>
         </ol>
@@ -82,13 +86,15 @@
     <p>When this page is loaded via a history navigation (see repro
     steps above), it should preserve the historical content of the
     "left" frame and the "right" frame.  The problem for some browsers
-    is that on odd loads the "left" frame is created first, and on even
-    loads the "right" frame is created first (confusing browsers into
+    is that on odd loads the "left" frame initially contains
+    blue-toc.htm and "right" frame contains gray-toc.htm, and on even
+    loads the <i>initial</i> contents of "left" and "right" frames are
+    swapped (confusing browsers into
     swapping frame contents in browsers that identify subframes based
-    on their creation order).
+    on their initial uri).
     </p>
     <hr>
-    <p>Frame creation order during this page load:</p>
+    <p>Frame creation order and initial frame contents during this page load:</p>
     <ul id="order-description"></ul>
     <hr>
     Dynamically created frames:
