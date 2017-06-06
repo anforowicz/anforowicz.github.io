@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Janky Frame</title>
+  </head>
+  <body>
+    <p>
+    This is a test frame.
+    It simulates bad content that hogs CPU.
+    </p>
+    <br>
+    <form>
+      <p>
+        Idle time in milliseconds:
+        <input type="number" id="idle_time" value="200">
+        ms.
+      </p>
+      <p>
+        Busy time in milliseconds:
+        <input type="number" id="busy_time" value="200">
+        ms.
+      </p>
+      <p>
+        Number of busy iterations:
+        <input type="number" id="busy_count" value="5">
+        iterations left.
+      </p>
+      <a href="#run" onclick="runJunkyCode()">Run</a>
+    </form>
+    <br>
+    <p>Status: <span id="status_text">not running</span></p>
+    <br>
+    <img src="public_domain.gif">
+    <script>
+      function runJunkyCode() {
+        var busy_count = window.busy_count.valueAsNumber;
+        if (busy_count <= 0) {
+          console.log("not running");
+          window.status_text.innerText = "not running";
+          return;
+        }
+        busy_count = busy_count - 1;
+        window.busy_count.valueAsNumber = busy_count;
+
+        window.status_text.innerText = "busy";
+        console.log("busy");
+        var start = Date.now();
+        while (Date.now() - start < window.busy_time.valueAsNumber) {
+          window.status_text.innerText = window.status_text.innerText + ".";
+        }
+
+        console.log("idle");
+        window.status_text.innerText = "idle";
+        setTimeout(runJunkyCode, window.idle_time.valueAsNumber);
+      }
+    </script>
+  </body>
+</html>
