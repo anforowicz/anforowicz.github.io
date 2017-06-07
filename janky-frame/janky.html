@@ -3,13 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Janky Frame</title>
+    <style type="text/css">
+      .my_animation {
+        animation: my_animation 3s ease;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+
+      }
+      @keyframes my_animation {
+        from {
+          font-size: 12px;
+          color: black;
+          transform: translateX(0px);
+        }
+
+        to {
+          font-size: 48px;
+          color: red;
+          transform: translateX(100px);
+        }
+      }
+    </style>
   </head>
   <body>
-    <p>
-    This is a test frame.
-    It simulates bad content that hogs CPU.
-    </p>
-    <br>
+    <p>This is a test frame.  It simulates bad content that hogs CPU.</p>
+    <p class="my_animation">Css animation <span id="my_animation">here</span></p>
+    <p>Animated gif: <img src="public_domain.gif"></p>
     <form>
       <p>
         Idle time in milliseconds:
@@ -23,15 +42,13 @@
       </p>
       <p>
         Number of busy iterations:
-        <input type="number" id="busy_count" value="5">
+        <input type="number" id="busy_count" value="50">
         iterations left.
       </p>
       <a href="#run" onclick="runJunkyCode()">Run</a>
     </form>
     <br>
     <p>Status: <span id="status_text">not running</span></p>
-    <br>
-    <img src="public_domain.gif">
     <script>
       function runJunkyCode() {
         var busy_count = window.busy_count.valueAsNumber;
