@@ -33,22 +33,9 @@
     </style>
   </head>
   <body>
-    <p>This page helps test behavior of janky cross-site frames.
-    trigger a history navigation.</p>
-    <section class="container">
-      <div class="main">
-        Main content (same-site frame):
-        <br>
-        <iframe src="janky.html"></iframe>
-      </div>
-      <div class="secondary">
-        Secondary content (cross-site frame):
-        <br>
-        <iframe src="https://anforowicz.github.io/janky-frame/janky.html"></iframe>
-      </div>
-    </section>
     <p>
-      What follows is a long text that makes the page scrollable.
+      This page helps test behavior of janky cross-site frames.
+      Silly, long paragraphs have been inserted to make the page scrollable.
     </p>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
@@ -106,6 +93,22 @@
       interdum odio porttitor faucibus. Aliquam in nibh tellus. Fusce id dolor
       purus. Vestibulum lobortis lobortis enim.
     </p>
+    <p>window.location = <span id="location_span">???</span></p>
+    <script>
+      window.location_span.innerText = window.location.href;
+    </script>
+    <section class="container">
+      <div class="main">
+        Main content (same-site frame):
+        <br>
+        <iframe src="janky.html"></iframe>
+      </div>
+      <div class="secondary">
+        Secondary content (cross-site frame):
+        <br>
+        <iframe src="https://anforowicz.github.io/janky-frame/janky.html"></iframe>
+      </div>
+    </section>
     <p>
       Mauris consequat ante et orci porta, non feugiat metus iaculis. Curabitur
       purus sapien, euismod commodo velit id, posuere facilisis massa. In sed

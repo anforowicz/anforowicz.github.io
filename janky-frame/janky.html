@@ -27,6 +27,7 @@
   </head>
   <body>
     <p>This is a test frame.  It simulates bad content that hogs CPU.</p>
+    <p>window.location = <span id="location_span">???</span></p>
     <p class="my_animation">Css animation <span id="my_animation">here</span></p>
     <p>Animated gif: <img src="public_domain.gif"></p>
     <form>
@@ -50,6 +51,7 @@
     <br>
     <p>Status: <span id="status_text">not running</span></p>
     <script>
+      window.location_span.innerText = window.location.href;
       function runJunkyCode() {
         var busy_count = window.busy_count.valueAsNumber;
         if (busy_count <= 0) {
