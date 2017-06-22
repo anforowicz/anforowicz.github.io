@@ -15,6 +15,16 @@
     <p>Link to go somewhere else:
       <a href="../janky-frame/janky.html">../janky-frame/janky.html</a>
     </p>
+    <script>
+      function navigateWithDelay() {
+        setTimeout(function() {
+          window.location.href = "../janky-frame/janky.html";
+        }, 10000);
+      }
+    </script>
+    <p>Link to go somewhere else after a 10 second timeout:
+      <a href="#delay" onclick="navigateWithDelay()">navigate with delay</a>
+    </p>
     <form>
       <input type="text" pattern="z+" value="zzz">
       <input type="text" pattern="z+" value="zzz">
