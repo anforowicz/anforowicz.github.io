@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Form validation bubble test</title>
+  </head>
+  <body>
+    <p>This is a test frame.  The form fields below can only contain 'z'
+    character and will show a form-validation-bubble when other input is
+    entered.</p>
+    <p>window.location = <span id="location_span">???</span></p>
+    <script>
+      window.location_span.innerText = window.location.href;
+    </script>
+    <p>Link to go somewhere else:
+      <a href="../janky-frame/janky.html">../janky-frame/janky.html</a>
+    </p>
+    <form>
+      <input type="text" pattern="z+" value="zzz">
+      <input type="text" pattern="z+" value="zzz">
+    </form>
+    <script>
+      var inputs = document.getElementsByTagName("input")
+      for (i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        input.addEventListener("input", function(e) {
+          if (!e.target.valid) {
+            e.target.setCustomValidity('Custom validity message');
+            e.target.reportValidity();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
