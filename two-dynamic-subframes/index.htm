@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <style>
+      iframe {
+        border-style: solid;
+        border-width: 5px;
+        width: 40%;
+        height: 15em;
+        position: absolute;
+      }
+
+      .left {
+        border-color: red;
+        left: 3em;
+      }
+      .right {
+        border-color: green;
+        right: 3em;
+      }
+    </style>
+    <script>
+      function addFrame(src, className) {
+        var iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.className = className;
+
+        // The next line helps Chromium identify the frames, although it is
+        // not strictly needed, because frame creation order is always:
+        // first "left", then "right".
+        iframe.name = className;
+
+        var framesDiv = document.getElementById("dynamically-created-frames");
+        framesDiv.appendChild(iframe);
+
+        var orderDescriptionList = document.getElementById("order-description");
+        var listItem = document.createElement('li');
+        listItem.innerText = 'Created <iframe class="' + className +
+          '" name="' + className + '" src="' + src + '"></iframe>';
+        orderDescriptionList.appendChild(listItem);
+      }
+
+      function onLoad() {
+        addFrame('blue-toc.htm', 'left');
+        addFrame('gray-toc.htm', 'right');
+      }
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <p>This page helps test history navigations.  Example steps to
+    trigger a history navigation:</p>
+    <ol>
+      <li>
+        <ol>
+          <li>Navigate to this page using the address bar / omnibox / etc.</li>
+          <li>Observe that the left frame contains
+            blue-toc.htm, and the right frame always contains gray-toc.htm</li>
+          <li>Click on a link to navigate the left frame to red.htm</li>
+          <li>Click on a link to navigate the right frame to green.htm</li>
+          <li>Observe that the left frame contains
+            red.htm, and the right frame always contains green.htm
+            (i.e. the color of frame contents and frame borders matches)</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>Navigate away (e.g. to
+              <a href="https://www.google.com">www.google.com</a>)</li>
+          <li>Go back once</li>
+          <li>Observe what the subframes contain</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>Go back once more</li>
+          <li>Observe what the subframes contain</li>
+        </ol>
+      </li>
+    </ol>
+
+    <hr>
+    <p>Frame creation order and initial frame contents during this page load:</p>
+    <ul id="order-description"></ul>
+    <hr>
+    Dynamically created frames:
+    <div id="dynamically-created-frames">
+    </div>
+  </body>
+</html>
