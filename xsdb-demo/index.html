@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>XSDB demo</title>
+  <script>
+    function addImgToChromiumHtmlDoc() {
+      var img = document.createElement('img');
+      img.src = 'https://www.chromium.org/';
+      document.body.appendChild(img);
+    }
+  </script>
+</head>
+<body>
+  <h1>Demo of XSDB</h1>
+  <p>
+    This page demonstrates how Cross-Site Document Blocking (XSDB) works.
+    Please see one of the following resources for more information about XSDB:
+    <ul>
+      <li>
+        <a href="https://www.chromium.org/developers/design-documents/blocking-cross-site-documents"
+          >Design document</a>
+      </li>
+      <li>
+        <!-- TODO: Link to the DL discussion, rather than to a Google Doc -->
+        <a href="https://docs.google.com/document/d/1sfNv5QdjNoKFiidmhp2xQr4uomAZ95CWsXYDocIgt8Y"
+          >Intent to ship</a>
+      </li>
+    </ul>
+  </p>
+  <p>
+    Press the button below to add an
+    <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
+    element that tries to sneak a cross-origin text/html document into
+    memory of a renderer process hosting another origin.
+  </p>
+  <button onclick="addImgToChromiumHtmlDoc()">
+    Add <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
+  </button>
+  <p>
+    The http request needed by the inserted <code>img</code> element should be
+    blocked by XSDB and there should be a console message saying:
+    <code>Blocked current origin from receiving cross-site document at
+      https://www.chromium.org/ with MIME type text/html.</code>
+  </p>
+  <br>
+  <p>
+    Dynamic content below...
+  </p>
+</body>
