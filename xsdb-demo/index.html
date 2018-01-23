@@ -28,20 +28,20 @@
     </ul>
   </p>
   <p>
-    Press the button below to add an
+    Make sure that XSDB is active (for example by launching Chrome with
+    the <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
+    cmdline flag) and then press the button below to add an
     <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
     element that tries to sneak a cross-origin text/html document into
     memory of a renderer process hosting another origin.
-  </p>
-  <button onclick="addImgToChromiumHtmlDoc()">
-    Add <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
-  </button>
-  <p>
     The http request needed by the inserted <code>img</code> element should be
     blocked by XSDB and there should be a console message saying:
     <code>Blocked current origin from receiving cross-site document at
       https://www.chromium.org/ with MIME type text/html.</code>
   </p>
+  <button onclick="addImgToChromiumHtmlDoc()">
+    Add <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
+  </button>
   <br>
   <p>
     Dynamic content below...
