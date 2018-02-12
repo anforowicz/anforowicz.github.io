@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>XSDB demo</title>
+  <title>CORB demo</title>
   <script>
     function addImgToChromiumHtmlDoc() {
       var img = document.createElement('img');
@@ -11,25 +11,24 @@
   </script>
 </head>
 <body>
-  <h1>Demo of XSDB</h1>
+  <h1>Demo of CORB</h1>
   <p>
-    This page demonstrates how Cross-Site Document Blocking (XSDB) works.
-    Please see one of the following resources for more information about XSDB:
+    This page demonstrates how Cross-Origin Read Blocking (CORB)
+    Please see one of the following resources for more information about CORB:
     <ul>
       <li>
-        <a href="https://www.chromium.org/developers/design-documents/blocking-cross-site-documents"
-          >Design document</a>
+        <a href="https://chromium.googlesource.com/chromium/src/+/master/content/browser/loader/cross_origin_read_blocking_explainer.md"
+          >Explainer</a>
       </li>
       <li>
-        <!-- TODO: Link to the DL discussion, rather than to a Google Doc -->
-        <a href="https://docs.google.com/document/d/1sfNv5QdjNoKFiidmhp2xQr4uomAZ95CWsXYDocIgt8Y"
-          >Intent to ship</a>
+        Older <a href="https://www.chromium.org/developers/design-documents/blocking-cross-site-documents"
+          >Design document</a>
       </li>
     </ul>
   </p>
-  <p>Repro steps to trigger XSDB:</p>
+  <p>Repro steps to trigger CORB:
   <ol>
-    <li>Make sure that XSDB is active (e.g. by launching Chrome with
+    <li>Make sure that CORB is active (e.g. by launching Chrome with
     the <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
     cmdline flag).</li>
     <li>Open Javascript console (e.g. by pressing Ctrl-Shift-I in Chrome).</li>
@@ -37,7 +36,7 @@
     <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
     element that tries to sneak a cross-origin text/html document into
     memory of a renderer process hosting another origin.</li>
-    <li>Observe that XSDB blocks the http request triggered by the inserted
+    <li>Observe that CORB blocks the http request triggered by the inserted
       <code>img</code> element.
       <ul>
         <li>Starting with Chrome 65, there there should be a console message saying:
