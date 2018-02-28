@@ -28,9 +28,9 @@
   </p>
   <p>Repro steps to trigger CORB:
   <ol>
-    <li>Make sure that CORB is active (e.g. by launching Chrome with
-    the <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
-    cmdline flag).</li>
+    <li>Make sure that CORB is active (e.g. by launching Chrome M63 or later
+      with the <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
+      cmdline flag).</li>
     <li>Open Javascript console (e.g. by pressing Ctrl-Shift-I in Chrome).</li>
     <li>Press the button below to add an
     <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
@@ -42,6 +42,14 @@
         <li>Starting with Chrome 65, there there should be a console message saying:
         <code>Blocked current origin from receiving cross-site document at
           https://www.chromium.org/ with MIME type text/html.</code>
+        </li>
+        <li>In Chrome one can also visit chrome://histograms and observe
+          <code>SiteIsolation.XSD.Browser*</code> metrics.  In particular, the
+          <code>SiteIsolation.XSD.Browser.Action</code> metric logs the
+          following events:
+          0 - response started, 1 - blocked without sniffing,
+          2 - blocked after sniffing, 3 - allowed without sniffing,
+          4 - allowed after sniffing.
         </li>
       </ul>
     </li>
