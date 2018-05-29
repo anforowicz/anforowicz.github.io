@@ -28,9 +28,18 @@
   </p>
   <p>Repro steps to trigger CORB:
   <ol>
-    <li>Make sure that CORB is active (e.g. by launching Chrome M63 or later
-      with the <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
-      cmdline flag).</li>
+    <li>Make sure that CORB is active
+      <ul>
+        <li>In Chrome M68 and later CORB is active by default - no special actions
+          need to be taken to activate CORB.</li>
+        <li>In earlier versions of Chrome, CORB is either activated together
+          with the <a
+            href="https://www.chromium.org/Home/chromium-security/site-isolation"
+            >Site Isolation</a> feature or can be manually activated by
+          launching Chrome with the
+          <code>--enable-features=CrossSiteDocumentBlockingAlways</code>
+        cmdline flag.</li>
+      </ul>
     <li>Open Javascript console (e.g. by pressing Ctrl-Shift-I in Chrome).</li>
     <li>Press the button below to add an
     <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
@@ -39,9 +48,18 @@
     <li>Observe that CORB blocks the http request triggered by the inserted
       <code>img</code> element.
       <ul>
-        <li>Starting with Chrome 65, there there should be a console message saying:
-        <code>Blocked current origin from receiving cross-site document at
-          https://www.chromium.org/ with MIME type text/html.</code>
+        <li>Whenever CORB blocks a reponse there is a DevTools console message:
+          <ul>
+            <li>In Chrome M66 and earlier:
+            <code>Blocked current origin from receiving cross-site document at
+              https://www.chromium.org/ with MIME type text/html.</code></li>
+            <li>In Chrome M67 and later:
+            <code>Cross-Origin Read Blocking (CORB) blocked cross-origin
+              response https://www.example.com/example.html with MIME type
+              text/html. See
+              https://www.chromestatus.com/feature/5629709824032768 for more
+              details.</code></li>
+          </ul>
         </li>
         <li>In Chrome one can also visit chrome://histograms and observe
           <code>SiteIsolation.XSD.Browser*</code> metrics.  In particular, the
