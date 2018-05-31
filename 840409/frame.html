@@ -1,0 +1,17 @@
+<html>
+<body>
+<a href="http://httpbin.org/" target="_top">Go to http://httpbin.org/</a>
+<br><br>
+<a href="/frame-creation-order/index.htm" target="_top">Go to same-origin</a>
+<script>
+function beforeunload(e) {
+    console.log("Going to", document.activeElement.href)
+    window.top.postMessage(window.scrollY, "*")
+    // calling directly works: window.top.history.replaceState({"scrollY": window.scrollY}, null, "")
+}
+
+window.addEventListener("beforeunload", beforeunload)
+</script>
+
+</body>
+</html>

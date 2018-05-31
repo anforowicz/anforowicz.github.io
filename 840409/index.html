@@ -1,0 +1,13 @@
+<html>
+<body>
+<iframe src='frame.html'></iframe>
+<script>
+function onMessage(message) {
+    console.log("onMessage", message)
+    window.history.replaceState({"scrollY": message.data}, null, window.location)
+}
+window.addEventListener("message", onMessage, false);
+document.write("window.history.state: " + JSON.stringify(window.history.state))
+</script>
+</body>
+</html>
