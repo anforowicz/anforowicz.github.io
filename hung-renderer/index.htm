@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    async function main() {
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://x-colab.googleusercontent.com/v2/usercontent/b645cdf6ae3e8b14/outputframe.html?vrz=1`;
+      iframe.style.display = 'block';
+
+      function addContentToIframe() {
+        const iframeSource = new URL('iframe.js', window.location);
+
+        iframe.contentWindow.postMessage({
+          'sandboxed_iframe_evaluation': `
+            const script = document.createElement('script');
+            script.src = "${iframeSource}";
+            document.head.appendChild(script);
+          `,
+        }, '*');
+      };
+
+
+      await new Promise((resolve, reject) => {
+        iframe.onload = resolve;
+        iframe.onerror = reject;
+        var div = document.getElementById("hung-commit");
+        div.appendChild(iframe);
+      });
+
+      addContentToIframe();
+      document.scrollingElement.scrollTop = 2000;
+    }
+
+    main();
+  </script>
+  <body>
+    Helpful links:
+    <ul>
+      <li>To hung googleusercontent.com (by spinning up a service worked that
+        just runs an infinite busy loop) go here:
+        <a href="https://peteblois.github.io/tmp/iframe_kill/"
+          >https://peteblois.github.io/tmp/iframe_kill/</a>
+    </ul>
+    <br>
+    Frame from <b>https://</b>anforowicz.github.io - clicking the button will
+    enter a busy loop:<br>
+    <iframe src="https://anforowicz.github.io/hung-renderer/hung-button.htm"></iframe>
+    <br><br>
+    Frame from googleusercontent.com (won't commit if googleusercontent.com is
+    in a busy loop):<br>
+    <div id="hung-commit"></div>
+  </body>
+</html>
