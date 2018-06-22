@@ -3,5 +3,16 @@
 function hung() {
   while(true);
 }
+function hung40() {
+  var start = Date.now();
+  while(true) {
+    var duration = Date.now() - start;
+    if (duration > 40000)
+      return;
+  }
+}
 </script>
 <a href="#blah" onclick="hung()">Click here to spin a busy loop</a>
+<br>
+<a href="#blah" onclick="hung40()">Click here to spin a busy loop for ~40 seconds</a>
+
