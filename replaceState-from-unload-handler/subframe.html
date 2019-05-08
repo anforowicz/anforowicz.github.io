@@ -1,0 +1,60 @@
+<a href="#" onclick="dumpState()">dumpState</a><br>
+<script>
+  function getExceptionSafeString(f) {
+    try {
+      return f();
+    } catch(err) {
+      return "error: " + err;
+    }
+  }
+
+  function dumpState() {
+      var state = "";
+
+      state += "current state on "
+      state += new Date();
+      state += "\n\n"
+
+      state += "localStorage.testToken: \n"
+      state += getExceptionSafeString(() => localStorage.testToken);
+      state += "\n\n"
+
+      state += "document.cookie: \n"
+      state += getExceptionSafeString(() => document.cookie);
+      state += "\n\n"
+
+      state += "history.state.testToken: \n"
+      state += getExceptionSafeString(() => history.state.testToken);
+      state += "\n\n"
+
+      var pre = document.createElement('pre');
+      pre.innerText = state;
+      document.body.appendChild(pre);
+  }
+
+  function storeState(token) {
+      stateObj = { testToken: token }
+      history.replaceState(stateObj, 'title', window.location.href);
+
+      localStorage.testToken = token;
+      document.cookie = 'testToken=' + token;
+  }
+
+  function unloadHandler(event) {
+      var date = new Date();
+      var token = "testDate: " + date;
+
+      // Waiting for 500ms, to give more time for browser-side things to go
+      // bad and delete RenderFrameHostImpl prematurely.
+      var start = (new Date()).getTime();
+      do {
+        curr = (new Date()).getTime();
+      } while (start + 500 > curr);
+
+      // Store state.
+      storeState("" + new Date());
+  }
+  window.addEventListener("unload", unloadHandler, false);
+
+  dumpState();
+</script>
