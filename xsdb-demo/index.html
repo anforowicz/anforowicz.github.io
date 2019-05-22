@@ -8,6 +8,12 @@
       img.src = 'https://www.chromium.org/';
       document.body.appendChild(img);
     }
+
+    function addImgToPdf() {
+      var img = document.createElement('img');
+      img.src = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+      document.body.appendChild(img);
+    }
   </script>
 </head>
 <body>
@@ -76,6 +82,10 @@
   </ol>
   <button onclick="addImgToChromiumHtmlDoc()">
     Add <code>&lt;img&nbsp;src=&quot;https://www.chromium.org/&quot;&gt;</code>
+  </button>
+  <br>
+  <button onclick="addImgToPdf()">
+    Add <code>&lt;img&nbsp;src=&quot;https://www.w3.org/.../dummy.pdf&quot;&gt;</code>
   </button>
   <br>
   <p>
