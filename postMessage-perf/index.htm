@@ -1,0 +1,106 @@
+<script type='text/javascript'>
+  var completedCallback;
+  function installOnMessage() {
+    var messages = 0;
+
+    window.onmessage = function(e) {
+      if (e.data == 'ping') {
+        e.source.postMessage('pong', '*');
+      } else if (e.data == 'pong') {
+        messages++;
+
+        if (messages < 10000) {
+          e.source.postMessage('ping', '*');
+        } else {
+          messages = 0;
+          if (completedCallback) {
+            completedCallback(performance.now());
+            completedCallback = null;
+          }
+        }
+      } else if (e.data == 'port') {
+        var port = e.ports[0];
+        port.postMessage('pong');
+        port.onmessage = function(channelEvent) {
+          if (channelEvent.data == 'ping') {
+            port.postMessage('pong');
+          }
+        }
+      }
+    }
+  }
+
+  async function testMessagePort(w) {
+    var channel = new MessageChannel();
+    var messages = 0;
+
+    var resolve;
+    var promise = new Promise(r => { resolve = r; });
+    var start = performance.now();
+
+    channel.port1.onmessage = function(e) {
+      if (e.data == 'pong') {
+        messages++;
+
+        if (messages < 10000) {
+          channel.port1.postMessage('ping');
+        } else {
+          messages = 0;
+          resolve(performance.now());
+        }
+      }
+    }
+
+    w.postMessage('port', '*', [channel.port2]);
+
+    await promise.then(end=> console.log('10000 round trips in ', end - start));
+  }
+
+  async function testWindowPostMessage(w) {
+    var promise = new Promise(r => { completedCallback = r; });
+    var start = performance.now();
+    w.postMessage('ping', '*');
+
+    await promise.then(end => console.log('10000 round trips in ', end - start));
+  }
+
+  window.onload = function() {
+    installOnMessage();
+  }
+
+  function testLocalFrame() {
+    var i = document.createElement('iframe');
+    i.src = location.href;
+    document.body.appendChild(i);
+
+    async function test() {
+      console.log('testing window postMessage');
+      await testWindowPostMessage(i.contentWindow);
+
+      console.log('testing MessagePort');
+      await testMessagePort(i.contentWindow);
+
+      i.remove();
+    }
+
+    setTimeout(test, 1000);
+  }
+
+  function testCrossOriginFrame(url) {
+    var i = document.createElement('iframe');
+    i.src = url;
+    document.body.appendChild(i);
+
+    async function test() {
+      console.log('testing window postMessage');
+      await testWindowPostMessage(i.contentWindow);
+
+      console.log('testing MessagePort');
+      await testMessagePort(i.contentWindow);
+
+      i.remove();
+    }
+
+    setTimeout(test, 1000);
+  }
+</script>
