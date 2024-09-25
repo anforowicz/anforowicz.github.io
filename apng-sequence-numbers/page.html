@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- Page to help with testing of APNG sequence numbers.
+-->
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <p>This page is here to help test https://crbug.com/369442793.</p>
+  <hr>
+  <p>The following image is taken from
+    <a href="https://philip.html5.org/tests/apng/tests.html#num-plays-0"
+      >https://philip.html5.org/tests/apng/tests.html#num-plays-0</a>.
+    This should flash yellow for one second, then blue for one second, then
+    repeat forever.
+  </p>
+  <br>
+  <img src="infinite-num-plays.png">
+  <hr>
+  <p>The following image is the same as the one above, except the sequence
+  number in the first <code>`fdAT`</code> chunk has been changed from 1
+  (valid) to 255 (invalid) and then the CRC32 of the chunk has been updated.
+  </p>
+  <p>
+  It is unclear how such an invalid APNG should behave.
+  https://crbug.com/369442793 suggests that Chromium/Blink will ignore the
+  invalid sequence numbers.
+  </p>
+  <br>
+  <img src="infinite-num-plays-invalid-seq-num.png">
+</body>
